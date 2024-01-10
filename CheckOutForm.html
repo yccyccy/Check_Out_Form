@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Transaction Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(45deg, #3494E6, #EC6EAD);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h2 {
+            color: #3494E6;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0 15px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #f5f5f5;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: url('https://imageurl.com/arrow-down.png') no-repeat right center;
+            background-size: 20px;
+        }
+
+        button {
+            background-color: #EC6EAD;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #FFC3A0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <form id="transactionForm">
+        <h2>Transaction Details</h2>
+
+        <!-- Amount -->
+        <label for="amount">Amount to Transfer:</label>
+        <input type="text" id="amount" name="amount" required>
+
+        <!-- Personal Info -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" required>
+
+        <!-- Payment Method -->
+        <label for="paymentMethod">Payment Method:</label>
+        <select id="paymentMethod" name="paymentMethod" onchange="togglePaymentFields()">
+            <option value="bankTransfer">Bank Transfer</option>
+            <option value="creditCard">Credit Card</option>
+        </select>
+
+        <!-- Bank Transfer Fields -->
+        <div id="bankTransferFields" style="display:none;">
+            <label for="bank">Select Bank:</label>
+            <select id="bank" name="bank">
+                <option value="bank1" data-url="https://ibanking.bangkokbank.com/SignOn.aspx">Bangkok Bank</option>
+                <option value="bank2" data-url="https://kbankconnect.kasikornbank.com.vn/IBVN/account/login?returnUrl=%2Fhome">Kasikornbank</option>
+                <option value="bank3" data-url="https://ib.gsb.or.th/retail/security/commonLogin.jsp">Goverment Saving Bank</option>
+                <option value="bank4" data-url="https://www.krungsrionline.com/BAY.KOL.WebSite/Common/Login.aspx?language=TH">Krungsri</option>
+        
+            </select>
+        </div>
+
+        <!-- Credit Card Fields (Note: This section is incomplete and should be handled securely) -->
+        <div id="creditCardFields" style="display:none;">
+            <label for="sellerAccount">Seller Account:</label>
+            <input type="text" id="sellerAccount" name="sellerAccount">
+
+            <label for="creditCardNumber">Credit Card Number:</label>
+            <input type="text" id="creditCardNumber" name="creditCardNumber">
+
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="text" id="expiryDate" name="expiryDate">
+
+            <label for="cvc">CVC:</label>
+            <input type="text" id="cvc" name="cvc">
+
+            <label for="bankName">Bank Name:</label>
+            <select id="bankSelect" name="bankSelect">
+                <option value="bank1">Krung Thai Bank</option>
+                <option value="bank2">SCB bank</option>
+                <option value="bank3">Bangkok Bank</option>
+                <option value="bank4">GSB Bank</option>
+                <option valu="bank5">Tmbthanachart Bank</option>
+                <option value="bank6">Baac Bank</option>
+                <option value="bank7">Bank of Ayudhya</option>
+
+                <!-- Add more banks as needed -->
+            </select>
+        </div>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <script>
+        function togglePaymentFields() {
+            var paymentMethod = document.getElementById("paymentMethod").value;
+            var bankTransferFields = document.getElementById("bankTransferFields");
+            var creditCardFields = document.getElementById("creditCardFields");
+
+            if (paymentMethod === "bankTransfer") {
+                bankTransferFields.style.display = "block";
+                creditCardFields.style.display = "none";
+            } else if (paymentMethod === "creditCard") {
+                bankTransferFields.style.display = "none";
+                creditCardFields.style.display = "block";
+            }
+        }
+
+        function submitForm() {
+            var paymentMethod = document.getElementById("paymentMethod").value;
+
+            if (paymentMethod === "bankTransfer") {
+                var selectedBankUrl = document.querySelector('#bank option:checked').getAttribute('data-url');
+                window.location.href = selectedBankUrl; // Redirect to the selected bank's URL
+            } else {
+                // Add your logic for credit card submission
+                alert("Form submitted!");
+            }
+        }
+    </script>
+</body>
+</html>
